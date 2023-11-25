@@ -8,7 +8,7 @@ public class Course {
 	private int courseID;
 	private String description;
 	private String startYear;
-	
+
 	private Teacher teacher;
 	private List<Student> students = new ArrayList<>();
 
@@ -47,6 +47,10 @@ public class Course {
 	public String getStartYear() {
 		return startYear;
 	}
+	
+	public void addStudent(Student student) {
+		students.add(student);
+	}
 
 	public void setStartYear(String startYear) {
 		this.startYear = startYear;
@@ -59,8 +63,6 @@ public class Course {
 	public void setStudents(List<Student> students) {
 		this.students = students;
 	}
+	
 
-	
-	
-	
 }

@@ -55,8 +55,8 @@ public class Student extends Person {
 	}
 
 	public CourseGrades getCourseGrades(int courseID) {
-		for(CourseGrades grade : this.courseGrades) { 
-			if(grade.getCourse().getCourseID() == courseID) {
+		for (CourseGrades grade : this.courseGrades) {
+			if (grade.getCourse().getCourseID() == courseID) {
 				return grade;
 			}
 		}

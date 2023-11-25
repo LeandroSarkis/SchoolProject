@@ -3,11 +3,10 @@ package entities;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class CourseGrades {
-	
+
 	private Course course;
-	
+
 	private List<Double> grades = new ArrayList<>();
 
 	public CourseGrades(Course course) {
@@ -21,21 +20,31 @@ public class CourseGrades {
 	public void setCourse(Course course) {
 		this.course = course;
 	}
-	
+
 	public void addGrade(Double grade) {
-		if(grades.size() == 2) {
+		if (grades.size() == 2) {
 			return;
 		}
 		this.grades.add(grade);
 	}
 	
+	public Double getFirstGrade() {
+		Double firstGrade = grades.get(0);
+		return firstGrade;
+	}
+	
+	public Double getSecondGrade() {
+		Double secondGrade = grades.get(1);
+		return secondGrade;
+	}
+
 	public Double gradeAvg() {
 		Double sum = 0d;
 
-		for(Double grades : this.grades) {
+		for (Double grades : this.grades) {
 			sum += grades;
 		}
-		
-		return sum/2;
+
+		return sum / 2;
 	}
 }
