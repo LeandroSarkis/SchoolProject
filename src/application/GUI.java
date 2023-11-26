@@ -116,7 +116,7 @@ public class GUI {
 		lblRegistrarEscola.setBounds(0, 10, 781, 24);
 		schoolPanel.add(lblRegistrarEscola);
 		
-		JButton btnCriarEscola = new JButton("Salvar");
+		JButton btnCriarEscola = new JButton("Criar");
 		btnCriarEscola.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tabbedPanel.setSelectedIndex(1);
@@ -188,7 +188,7 @@ public class GUI {
 		lblCadastrarProfessores.setBounds(0, 10, 781, 24);
 		teacherPanel.add(lblCadastrarProfessores);
 		
-		JButton btnCriarProf = new JButton("Continuar");
+		JButton btnCriarProf = new JButton("Criar");
 		btnCriarProf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tabbedPanel.setSelectedIndex(2);
