@@ -6,10 +6,10 @@ import entities.CourseGrades;
 
 public  class AddStudentCourse {
 	
-	public static void addStudentCourse(Student student, Course course, int courseID, Double firstGrade, Double secondGrade) {
+	public static void addStudentCourse(Student student, Course course, Double firstGrade, Double secondGrade) {
 		student.addCourse(new CourseGrades(course)); 
-		student.getCourseGrades(courseID).addGrade(firstGrade);
-		student.getCourseGrades(courseID).addGrade(secondGrade);
+		student.getCourseGrades(course.getCourseID()).addGrade(firstGrade);
+		student.getCourseGrades(course.getCourseID()).addGrade(secondGrade);
 		course.addStudent(student);
 	}
 

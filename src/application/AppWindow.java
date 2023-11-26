@@ -30,6 +30,7 @@ import entities.Director;
 import entities.School;
 import entities.Student;
 import entities.Teacher;
+import util.AddStudentCourse;
 import util.CreateObjects;
 //import javax.swing.JTextField;
 //import javax.swing.OverlayLayout;
@@ -120,14 +121,21 @@ public class AppWindow {
 			comboBOX.addItem(lista.get((i)));
 		}
 	}
+	
+	public void atualizarComboBoxCurso(JComboBox comboBOX, List<Course> lista) {
+
+		comboBOX.removeAllItems();
+
+		for (int i = 0; i < lista.size(); i++) {
+			comboBOX.addItem(lista.get((i)));
+		}
+	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 
 	private void initialize() {
-
-		int i = 0;
 
 		List<School> schools = new ArrayList<>();
 		List<Course> courses = new ArrayList<>();
@@ -154,7 +162,20 @@ public class AppWindow {
 
 		JPanel schoolPanel = new JPanel();
 		tabbedPanel.addTab("Escola", null, schoolPanel, null);
+		tabbedPanel.setEnabledAt(0, true);
 		schoolPanel.setLayout(null);
+
+		JPanel studentPanel = new JPanel();
+		tabbedPanel.addTab("Aluno", null, studentPanel, null);
+		studentPanel.setLayout(null);
+		
+		JPanel enrollPanel = new JPanel();
+		tabbedPanel.addTab("Matrícula", null, enrollPanel, null);
+		enrollPanel.setLayout(null);
+
+		JPanel teacherPanel = new JPanel();
+		tabbedPanel.addTab("Professores", null, teacherPanel, null);
+		teacherPanel.setLayout(null);
 
 		JLabel lblRegistrarEscola = new JLabel(" Registrar Escola");
 		lblRegistrarEscola.setHorizontalAlignment(SwingConstants.LEFT);
@@ -162,22 +183,31 @@ public class AppWindow {
 		lblRegistrarEscola.setBounds(0, 10, 781, 24);
 		schoolPanel.add(lblRegistrarEscola);
 
+		JPanel coursePanel = new JPanel();
+		tabbedPanel.addTab("Cursos", null, coursePanel, null);
+		coursePanel.setLayout(null);
+
+		JComboBox cbxCursoEscola = new JComboBox(new Object[] {});
+		cbxCursoEscola.setEditable(true);
+		cbxCursoEscola.setBounds(519, 178, 171, 21);
+		coursePanel.add(cbxCursoEscola);
+
 		@SuppressWarnings("unchecked")
 		JComboBox cbxDiretorEscola = new JComboBox(directors.toArray());
 		cbxDiretorEscola.setEditable(true);
 		cbxDiretorEscola.setBounds(540, 111, 160, 21);
 		schoolPanel.add(cbxDiretorEscola);
 
-		JPanel teacherPanel = new JPanel();
-		tabbedPanel.addTab("Professores", null, teacherPanel, null);
-		tabbedPanel.setEnabledAt(1, true);
-		teacherPanel.setLayout(null);
-
 		@SuppressWarnings("unchecked")
 		JComboBox cbxEscolaProfessor = new JComboBox(schools.toArray());
 		cbxEscolaProfessor.setEditable(true);
 		cbxEscolaProfessor.setBounds(190, 178, 171, 21);
 		teacherPanel.add(cbxEscolaProfessor);
+
+		JComboBox cbxAlunoEscola = new JComboBox();
+		cbxAlunoEscola.setEditable(true);
+		cbxAlunoEscola.setBounds(165, 177, 171, 21);
+		studentPanel.add(cbxAlunoEscola);
 
 		JButton btnCriarEscola = new JButton("Criar");
 		btnCriarEscola.addActionListener(new ActionListener() {
@@ -187,6 +217,9 @@ public class AppWindow {
 						Integer.parseInt(txtIDEscola.getText()), txtAnoFundacaoEsc.getText(),
 						(Director) cbxDiretorEscola.getSelectedItem(), schools);
 				atualizarComboBoxEscola(cbxEscolaProfessor, schools);
+				atualizarComboBoxEscola(cbxCursoEscola, schools);
+				atualizarComboBoxEscola(cbxAlunoEscola, schools);
+
 			}
 		});
 		btnCriarEscola.setBackground(UIManager.getColor("Button.shadow"));
@@ -239,6 +272,11 @@ public class AppWindow {
 		lblDiretorEscola.setBounds(404, 115, 126, 16);
 		schoolPanel.add(lblDiretorEscola);
 
+		JComboBox cbxCursoProfessor = new JComboBox(new Object[] {});
+		cbxCursoProfessor.setEditable(true);
+		cbxCursoProfessor.setBounds(164, 178, 171, 21);
+		coursePanel.add(cbxCursoProfessor);
+
 		JLabel lblCadastrarProfessores = new JLabel(" Cadastrar Professores");
 		lblCadastrarProfessores.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCadastrarProfessores.setFont(new Font("Consolas", Font.BOLD, 20));
@@ -254,6 +292,8 @@ public class AppWindow {
 						txtDataContratacaoProf.getText(), txtDisciplinaLecionada.getText(),
 						(School) cbxEscolaProfessor.getSelectedItem(), teachers);
 				System.out.println("criado!");
+				atualizarComboBoxProfessor(cbxCursoProfessor, teachers);
+
 			}
 		});
 		btnCriarProf.setFont(new Font("Consolas", Font.BOLD, 15));
@@ -334,6 +374,7 @@ public class AppWindow {
 				CreateObjects.createDirector(txtNomeDiretor.getText(), Integer.parseInt(txtIDDiretor.getText()),
 						txtDataContratacaoDiretor.getText(), directors);
 				System.out.println("criado");
+				atualizarComboBoxDiretor(cbxDiretorEscola, directors);
 
 			}
 		});
@@ -383,16 +424,16 @@ public class AppWindow {
 		txtNomeDiretor.setBounds(190, 64, 171, 19);
 		directorPanel.add(txtNomeDiretor);
 
-		JPanel studentPanel = new JPanel();
-		tabbedPanel.addTab("Aluno", null, studentPanel, null);
-		tabbedPanel.setEnabledAt(3, true);
-		studentPanel.setLayout(null);
-
 		JLabel lblCadastrarAlunos = new JLabel(" Cadastrar Alunos");
 		lblCadastrarAlunos.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCadastrarAlunos.setFont(new Font("Consolas", Font.BOLD, 20));
 		lblCadastrarAlunos.setBounds(0, 10, 781, 24);
 		studentPanel.add(lblCadastrarAlunos);
+		
+		JComboBox cbxMatricularAluno = new JComboBox(students.toArray());
+		cbxMatricularAluno.setEditable(true);
+		cbxMatricularAluno.setBounds(348, 58, 160, 21);
+		enrollPanel.add(cbxMatricularAluno);
 
 		JButton btnCriarAluno = new JButton("Criar");
 		btnCriarAluno.addActionListener(new ActionListener() {
@@ -400,6 +441,8 @@ public class AppWindow {
 				CreateObjects.createStudent(txtNomeAluno.getText(), Integer.parseInt(txtNumeroMatricula.getText()),
 						txtSerie.getText(), txtDataInscricaoAluno.getText(), (School) cbxAlunoEscola.getSelectedItem(),
 						students);
+				
+				atualizarComboBoxAluno(cbxMatricularAluno, students);
 
 			}
 		});
@@ -459,20 +502,10 @@ public class AppWindow {
 		txtDataInscricaoAluno.setBounds(558, 123, 124, 19);
 		studentPanel.add(txtDataInscricaoAluno);
 
-		cbxAlunoEscola = new JComboBox();
-		cbxAlunoEscola.setEditable(true);
-		cbxAlunoEscola.setBounds(165, 177, 171, 21);
-		studentPanel.add(cbxAlunoEscola);
-
 		JLabel lblEscola = new JLabel("Escola:");
 		lblEscola.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblEscola.setBounds(104, 177, 60, 21);
 		studentPanel.add(lblEscola);
-
-		JPanel enrollPanel = new JPanel();
-		tabbedPanel.addTab("Matrícula", null, enrollPanel, null);
-		tabbedPanel.setEnabledAt(4, true);
-		enrollPanel.setLayout(null);
 
 		JLabel lblMatricularAlunos = new JLabel(" Matricular Alunos");
 		lblMatricularAlunos.setHorizontalAlignment(SwingConstants.LEFT);
@@ -480,10 +513,17 @@ public class AppWindow {
 		lblMatricularAlunos.setBounds(0, 10, 781, 24);
 		enrollPanel.add(lblMatricularAlunos);
 
+		JComboBox cbxCursoMatricula = new JComboBox();
+		cbxCursoMatricula.setEditable(true);
+		cbxCursoMatricula.setBounds(348, 112, 160, 21);
+		enrollPanel.add(cbxCursoMatricula);
+
 		JButton btnCriarMatricula = new JButton("Criar");
 		btnCriarMatricula.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				tabbedPanel.setSelectedIndex(6);
+				AddStudentCourse.addStudentCourse( (Student) cbxMatricularAluno.getSelectedItem(),
+						 (Course) cbxCursoMatricula.getSelectedItem(), Double.valueOf(txtNotas1.getText()),
+						Double.valueOf(txtNotas2.getText()));
 			}
 		});
 		btnCriarMatricula.setFont(new Font("Consolas", Font.BOLD, 15));
@@ -507,20 +547,10 @@ public class AppWindow {
 		lblNomeAlunoMatricula.setBounds(274, 57, 64, 18);
 		enrollPanel.add(lblNomeAlunoMatricula);
 
-		JComboBox cbxMatricularAluno = new JComboBox();
-		cbxMatricularAluno.setEditable(true);
-		cbxMatricularAluno.setBounds(348, 58, 160, 21);
-		enrollPanel.add(cbxMatricularAluno);
-
 		JLabel lblCursoMatricula = new JLabel("Curso:");
 		lblCursoMatricula.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblCursoMatricula.setBounds(274, 111, 64, 18);
 		enrollPanel.add(lblCursoMatricula);
-
-		JComboBox cbxCursoMatricula = new JComboBox();
-		cbxCursoMatricula.setEditable(true);
-		cbxCursoMatricula.setBounds(348, 112, 160, 21);
-		enrollPanel.add(cbxCursoMatricula);
 
 		JLabel lblNotas1 = new JLabel("Notas do 1º Bimestre:");
 		lblNotas1.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -611,11 +641,6 @@ public class AppWindow {
 		lblNotas.setBounds(313, 187, 197, 18);
 		reportPanel.add(lblNotas);
 
-		JPanel coursePanel = new JPanel();
-		tabbedPanel.addTab("Cursos", null, coursePanel, null);
-		tabbedPanel.setEnabledAt(6, true);
-		coursePanel.setLayout(null);
-
 		JLabel lblCriarCursos = new JLabel(" Criar Cursos");
 		lblCriarCursos.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCriarCursos.setFont(new Font("Consolas", Font.BOLD, 20));
@@ -633,16 +658,6 @@ public class AppWindow {
 		btnVoltar3.setBounds(32, 290, 132, 32);
 		coursePanel.add(btnVoltar3);
 
-		JComboBox cbxCursoEscola = new JComboBox(new Object[] {});
-		cbxCursoEscola.setEditable(true);
-		cbxCursoEscola.setBounds(519, 178, 171, 21);
-		coursePanel.add(cbxCursoEscola);
-
-		JComboBox cbxCursoProfessor = new JComboBox(new Object[] {});
-		cbxCursoProfessor.setEditable(true);
-		cbxCursoProfessor.setBounds(164, 178, 171, 21);
-		coursePanel.add(cbxCursoProfessor);
-
 		JButton btnCriarCurso = new JButton("Criar");
 		btnCriarCurso.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -650,6 +665,8 @@ public class AppWindow {
 						txtDescricaoCurso.getText(), txtAnoDeInicio.getText(),
 						(Teacher) cbxCursoProfessor.getSelectedItem(), (School) cbxCursoEscola.getSelectedItem(),
 						courses);
+				atualizarComboBoxCurso(cbxCursoMatricula, courses);
+				
 			};
 		});
 		btnCriarCurso.setVerticalAlignment(SwingConstants.BOTTOM);

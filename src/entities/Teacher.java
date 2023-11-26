@@ -41,9 +41,7 @@ public class Teacher extends Employee {
 
 	@Override
 	public String toString() {
-		return "Teacher [subject=" + subject + ", identificationNumber=" + identificationNumber + ", hiringDate="
-				+ hiringDate + ", name=" + name + ", getIdentificationNumber()=" + getIdentificationNumber()
-				+ ", getHiringDate()=" + getHiringDate() + ", getSubject()=" + getSubject() + "]";
+		return name;
 	}
 
 }
