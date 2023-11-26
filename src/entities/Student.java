@@ -62,4 +62,11 @@ public class Student extends Person {
 		}
 		return null;
 	}
+
+	@Override
+	public String toString() {
+		return name;
+	}
+	
+	
 }

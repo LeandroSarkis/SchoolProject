@@ -5,13 +5,12 @@ import entities.Student;
 
 public class CourseReport {
 
-	public static void generateReport(Course course) {
-
-		System.out.println("Course name: " + course.getName() + "\nAll students: \n\n"
+	public static String generateReport(Course course) {
+		
+		return "Nome do curso: " + course.getName() + "\nTodos os estudantes: \n\n"
 				+ allStudentsNamesAndGrades(course) + "************************************\n"
-				+ "The average of all students is: " + allStudentAVG(course)+ "\n\n************************************\n"
-				+ "The standard deviant of all students is: " + allStudentStandardDeviation(course));
-
+				+ "A media dos estudantes: " + allStudentAVG(course)+ "\n\n************************************\n"
+				+ "O desvio padrao dos estudantes é: " + allStudentStandardDeviation(course);
 	}
 
 	public static String allStudentsNamesAndGrades(Course course) {

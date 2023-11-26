@@ -16,11 +16,14 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 //import javax.swing.UIManager;
 //import javax.swing.JLayeredPane;
 //import javax.swing.JDesktopPane;
 //import javax.swing.JMenuBar;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -31,6 +34,7 @@ import entities.School;
 import entities.Student;
 import entities.Teacher;
 import util.AddStudentCourse;
+import util.CourseReport;
 import util.CreateObjects;
 //import javax.swing.JTextField;
 //import javax.swing.OverlayLayout;
@@ -582,11 +586,26 @@ public class AppWindow {
 		lblGerarRelatrio.setFont(new Font("Consolas", Font.BOLD, 20));
 		lblGerarRelatrio.setBounds(0, 10, 781, 24);
 		reportPanel.add(lblGerarRelatrio);
+		
+		JComboBox cbxSelecionarCurso = new JComboBox();
+		cbxSelecionarCurso.setEditable(true);
+		cbxSelecionarCurso.setBounds(160, 45, 125, 18);
+		reportPanel.add(cbxSelecionarCurso);
+		
+		JTextArea textAreaRelatorio = new JTextArea();
+		textAreaRelatorio.setBounds(171, 143, 451, 179);
+		reportPanel.add(textAreaRelatorio);
+		
 
 		JButton btnGerarRelatorio = new JButton("Gerar");
+		btnGerarRelatorio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textAreaRelatorio.setText(CourseReport.generateReport((Course) cbxSelecionarCurso.getSelectedItem()));
+			}
+		});
 		btnGerarRelatorio.setFont(new Font("Consolas", Font.BOLD, 15));
 		btnGerarRelatorio.setBackground(UIManager.getColor("Button.shadow"));
-		btnGerarRelatorio.setBounds(620, 290, 132, 32);
+		btnGerarRelatorio.setBounds(632, 290, 132, 32);
 		reportPanel.add(btnGerarRelatorio);
 
 		JButton btnVoltar6 = new JButton("Voltar");
@@ -602,23 +621,20 @@ public class AppWindow {
 
 		JLabel lblSelecionarCurso = new JLabel("Selecionar Curso:");
 		lblSelecionarCurso.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblSelecionarCurso.setBounds(160, 83, 140, 18);
+		lblSelecionarCurso.setBounds(10, 45, 140, 18);
 		reportPanel.add(lblSelecionarCurso);
-
-		JComboBox cbxSelecionarCurso = new JComboBox();
-		cbxSelecionarCurso.setEditable(true);
-		cbxSelecionarCurso.setBounds(310, 83, 200, 21);
-		reportPanel.add(cbxSelecionarCurso);
 
 		JLabel lblCursoSelecionado = new JLabel("Curso Selecionado:");
 		lblCursoSelecionado.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblCursoSelecionado.setBounds(160, 133, 140, 18);
+		lblCursoSelecionado.setBounds(10, 95, 140, 18);
 		reportPanel.add(lblCursoSelecionado);
 
 		JLabel lblCursoResultado = new JLabel("...........................................");
 		lblCursoResultado.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblCursoResultado.setBounds(313, 133, 197, 18);
+		lblCursoResultado.setBounds(163, 95, 122, 18);
 		reportPanel.add(lblCursoResultado);
+		
+
 
 		JButton btnOK = new JButton("OK");
 		btnOK.addActionListener(new ActionListener() {
@@ -628,18 +644,14 @@ public class AppWindow {
 		});
 		btnOK.setFont(new Font("Consolas", Font.PLAIN, 15));
 		btnOK.setBackground(UIManager.getColor("Button.shadow"));
-		btnOK.setBounds(548, 84, 92, 20);
+		btnOK.setBounds(295, 45, 92, 20);
 		reportPanel.add(btnOK);
 
 		JLabel lblRelatrioDeNotas = new JLabel("Relatório de Notas:");
 		lblRelatrioDeNotas.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblRelatrioDeNotas.setBounds(160, 182, 140, 18);
+		lblRelatrioDeNotas.setBounds(10, 144, 140, 18);
 		reportPanel.add(lblRelatrioDeNotas);
-
-		JLabel lblNotas = new JLabel("...........................................");
-		lblNotas.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNotas.setBounds(313, 187, 197, 18);
-		reportPanel.add(lblNotas);
+		
 
 		JLabel lblCriarCursos = new JLabel(" Criar Cursos");
 		lblCriarCursos.setHorizontalAlignment(SwingConstants.LEFT);
@@ -666,6 +678,7 @@ public class AppWindow {
 						(Teacher) cbxCursoProfessor.getSelectedItem(), (School) cbxCursoEscola.getSelectedItem(),
 						courses);
 				atualizarComboBoxCurso(cbxCursoMatricula, courses);
+				atualizarComboBoxCurso(cbxSelecionarCurso, courses);
 				
 			};
 		});
