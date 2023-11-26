@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
@@ -90,6 +91,32 @@ public class AppWindow {
 		initialize();
 	}
 
+	private boolean validateAndSubmit(JPanel panel, JTextField textField) {
+		String nome = textField.getText();
+
+		if (nome.isEmpty()) {
+			displayErrorMessage(panel, "Campo de nome não pode estar vazio.");
+			return false;
+		} else if (nome.matches(".*\\d.*")) {
+			displayErrorMessage(panel, "O nome não pode conter números.");
+			return false;
+		} else if (nome.matches(".*[^a-zA-Z].*")) {
+			displayErrorMessage(panel, "O nome não pode conter caracteres especiais.");
+			return false;
+		} else {
+			JOptionPane.showMessageDialog(panel, "Nome válido: " + nome, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+			return true;
+		}
+	}
+
+	private static void displayErrorMessage(JPanel panel, String message) {
+		JOptionPane.showMessageDialog(panel, message, "Erro", JOptionPane.ERROR_MESSAGE);
+	}
+
+	private static void clearErrorMessage(JPanel panel) {
+		JOptionPane.getRootFrame().dispose();
+	}
+
 	public void atualizarComboBoxEscola(JComboBox comboBOX, List<School> lista) {
 
 		comboBOX.removeAllItems();
@@ -125,7 +152,7 @@ public class AppWindow {
 			comboBOX.addItem(lista.get((i)));
 		}
 	}
-	
+
 	public void atualizarComboBoxCurso(JComboBox comboBOX, List<Course> lista) {
 
 		comboBOX.removeAllItems();
@@ -172,7 +199,7 @@ public class AppWindow {
 		JPanel studentPanel = new JPanel();
 		tabbedPanel.addTab("Aluno", null, studentPanel, null);
 		studentPanel.setLayout(null);
-		
+
 		JPanel enrollPanel = new JPanel();
 		tabbedPanel.addTab("Matrícula", null, enrollPanel, null);
 		enrollPanel.setLayout(null);
@@ -375,11 +402,13 @@ public class AppWindow {
 		JButton btnCriarDiretor = new JButton("Criar");
 		btnCriarDiretor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CreateObjects.createDirector(txtNomeDiretor.getText(), Integer.parseInt(txtIDDiretor.getText()),
-						txtDataContratacaoDiretor.getText(), directors);
-				System.out.println("criado");
-				atualizarComboBoxDiretor(cbxDiretorEscola, directors);
-
+				validateAndSubmit(directorPanel, txtNomeDiretor);
+				if (validateAndSubmit(directorPanel, txtNomeDiretor) == true) {
+					CreateObjects.createDirector(txtNomeDiretor.getText(), Integer.parseInt(txtIDDiretor.getText()),
+							txtDataContratacaoDiretor.getText(), directors);
+					System.out.println("criado");
+					atualizarComboBoxDiretor(cbxDiretorEscola, directors);
+				}
 			}
 		});
 		btnCriarDiretor.setFont(new Font("Consolas", Font.BOLD, 15));
@@ -433,7 +462,7 @@ public class AppWindow {
 		lblCadastrarAlunos.setFont(new Font("Consolas", Font.BOLD, 20));
 		lblCadastrarAlunos.setBounds(0, 10, 781, 24);
 		studentPanel.add(lblCadastrarAlunos);
-		
+
 		JComboBox cbxMatricularAluno = new JComboBox(students.toArray());
 		cbxMatricularAluno.setEditable(true);
 		cbxMatricularAluno.setBounds(348, 58, 160, 21);
@@ -445,7 +474,7 @@ public class AppWindow {
 				CreateObjects.createStudent(txtNomeAluno.getText(), Integer.parseInt(txtNumeroMatricula.getText()),
 						txtSerie.getText(), txtDataInscricaoAluno.getText(), (School) cbxAlunoEscola.getSelectedItem(),
 						students);
-				
+
 				atualizarComboBoxAluno(cbxMatricularAluno, students);
 
 			}
@@ -525,8 +554,8 @@ public class AppWindow {
 		JButton btnCriarMatricula = new JButton("Criar");
 		btnCriarMatricula.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AddStudentCourse.addStudentCourse( (Student) cbxMatricularAluno.getSelectedItem(),
-						 (Course) cbxCursoMatricula.getSelectedItem(), Double.valueOf(txtNotas1.getText()),
+				AddStudentCourse.addStudentCourse((Student) cbxMatricularAluno.getSelectedItem(),
+						(Course) cbxCursoMatricula.getSelectedItem(), Double.valueOf(txtNotas1.getText()),
 						Double.valueOf(txtNotas2.getText()));
 			}
 		});
@@ -586,16 +615,15 @@ public class AppWindow {
 		lblGerarRelatrio.setFont(new Font("Consolas", Font.BOLD, 20));
 		lblGerarRelatrio.setBounds(0, 10, 781, 24);
 		reportPanel.add(lblGerarRelatrio);
-		
+
 		JComboBox cbxSelecionarCurso = new JComboBox();
 		cbxSelecionarCurso.setEditable(true);
 		cbxSelecionarCurso.setBounds(160, 45, 125, 18);
 		reportPanel.add(cbxSelecionarCurso);
-		
+
 		JTextArea textAreaRelatorio = new JTextArea();
 		textAreaRelatorio.setBounds(171, 143, 451, 179);
 		reportPanel.add(textAreaRelatorio);
-		
 
 		JButton btnGerarRelatorio = new JButton("Gerar");
 		btnGerarRelatorio.addActionListener(new ActionListener() {
@@ -633,8 +661,6 @@ public class AppWindow {
 		lblCursoResultado.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblCursoResultado.setBounds(163, 95, 122, 18);
 		reportPanel.add(lblCursoResultado);
-		
-
 
 		JButton btnOK = new JButton("OK");
 		btnOK.addActionListener(new ActionListener() {
@@ -651,7 +677,6 @@ public class AppWindow {
 		lblRelatrioDeNotas.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblRelatrioDeNotas.setBounds(10, 144, 140, 18);
 		reportPanel.add(lblRelatrioDeNotas);
-		
 
 		JLabel lblCriarCursos = new JLabel(" Criar Cursos");
 		lblCriarCursos.setHorizontalAlignment(SwingConstants.LEFT);
@@ -679,7 +704,7 @@ public class AppWindow {
 						courses);
 				atualizarComboBoxCurso(cbxCursoMatricula, courses);
 				atualizarComboBoxCurso(cbxSelecionarCurso, courses);
-				
+
 			};
 		});
 		btnCriarCurso.setVerticalAlignment(SwingConstants.BOTTOM);
