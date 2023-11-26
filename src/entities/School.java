@@ -15,6 +15,11 @@ public class School {
 	private List<Student> students = new ArrayList<>();
 	private List<Course> courses = new ArrayList<>();
 
+	public School(String name) {
+
+		this.name = name;
+
+	}
 	public School(String name, String address, int ID, String foundationYear, Director director) {
 
 		this.name = name;
@@ -76,6 +81,43 @@ public class School {
 		courses.add(course);
 	}
 
+	public void addStudent(Student student) {
+		students.add(student);
+	}
+
+	public Student getStudent(int enrollmentNumber) {
+
+		for (int i = 0; i <= students.size(); i++) {
+			if (students.get(i).getEnrollmentNumber() == enrollmentNumber) {
+				return students.get(i);
+			}
+
+		}
+		return null;
+	}
+	
+	public Teacher getTeacher(int identificationNumber) {
+
+		for (int i = 0; i <= teachers.size(); i++) {
+			if (teachers.get(i).getIdentificationNumber() == identificationNumber) {
+				return teachers.get(i);
+			}
+
+		}
+		return null;
+	}
+	
+	public Course getCourse(int CourseID) {
+
+		for (int i = 0; i <= courses.size(); i++) {
+			if (courses.get(i).getCourseID() == CourseID) {
+				return courses.get(i);
+			}
+
+		}
+		return null;
+	}
+
 	public String getAllTeachersNames() {
 		String teachersNames = "";
 		for (int i = 0; i < teachers.size(); i++) {
@@ -86,9 +128,7 @@ public class School {
 
 	@Override
 	public String toString() {
-		return "School [name=" + name + ", address=" + address + ", ID=" + ID + ", foundationYear=" + foundationYear
-				+ ", director=" + director.getName() + ", teachers=" + getAllTeachersNames() + ", students=" + students
-				+ ", courses=" + courses + "]";
+		return name;
 	}
 
 }

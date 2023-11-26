@@ -7,6 +7,12 @@ public class Director extends Employee {
 		this.identificationNumber = identificationNumber;
 		this.hiringDate = hiringDate;
 	}
+	
+	public Director(String name) {
+		this.name = name;
+
+	}
+
 
 	public String getName() {
 		return name;
@@ -30,5 +36,10 @@ public class Director extends Employee {
 
 	public void setHiringDate(String hiringDate) {
 		this.hiringDate = hiringDate;
+	}
+
+	@Override
+	public String toString() {
+		return name;
 	}
 }
