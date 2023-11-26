@@ -22,6 +22,10 @@ import javax.swing.SwingConstants;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import javax.swing.UIManager;
+import javax.swing.JTextField;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JTextArea;
 //import javax.swing.JTextField;
 //import javax.swing.OverlayLayout;
 
@@ -29,6 +33,26 @@ public class GUI {
 
 	private JFrame frame;
 	private JTabbedPane tabbedPanel;
+	private JTextField txtNomeEscola;
+	private JTextField txtEnderecoEscola;
+	private JTextField txtIDEscola;
+	private JTextField txtAnoFundacaoEsc;
+	private JTextField txtNomeDoProf;
+	private JTextField txtIDProf;
+	private JTextField txtDataContratacaoProf;
+	private JTextField txtDisciplinaLecionada;
+	private JTextField txtNomeAluno;
+	private JTextField txtNumeroMatricula;
+	private JTextField txtSerie;
+	private JTextField txtDataInscricaoAluno;
+	private JTextField txtNomeCurso;
+	private JTextField txtCodigoCurso;
+	private JTextField txtDescricaoCurso;
+	private JTextField txtAnoDeInicio;
+	private JTextField txtIDDiretor;
+	private JTextField txtDataContratacaoDiretor;
+	private JTextField txtNotas1;
+	private JTextField txtNotas2;
 
 	/**
 	 * Launch the application.
@@ -72,11 +96,11 @@ public class GUI {
 		frame.getContentPane().setLayout(null);
 		
 		
-		JLabel lblPortalAcadmico = new JLabel("Portal Acadêmico");
-		lblPortalAcadmico.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPortalAcadmico.setBounds(220, 21, 363, 44);
-		lblPortalAcadmico.setFont(new Font("Consolas", Font.BOLD, 40));
-		frame.getContentPane().add(lblPortalAcadmico);
+		JLabel lblPortalAcademico = new JLabel("Portal Acadêmico");
+		lblPortalAcademico.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPortalAcademico.setBounds(220, 21, 363, 44);
+		lblPortalAcademico.setFont(new Font("Consolas", Font.BOLD, 40));
+		frame.getContentPane().add(lblPortalAcademico);
 		
 		JTabbedPane tabbedPanel = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPanel.setBounds(0, 87, 796, 376);
@@ -92,20 +116,70 @@ public class GUI {
 		lblRegistrarEscola.setBounds(0, 10, 781, 24);
 		schoolPanel.add(lblRegistrarEscola);
 		
-		JButton btnNewButton = new JButton("Continuar");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnCriarEscola = new JButton("Salvar");
+		btnCriarEscola.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tabbedPanel.setSelectedIndex(1);
 			}
 		});
-		btnNewButton.setBackground(UIManager.getColor("Button.shadow"));
-		btnNewButton.setFont(new Font("Consolas", Font.BOLD, 15));
-		btnNewButton.setBounds(620, 290, 132, 32);
-		schoolPanel.add(btnNewButton);
+		btnCriarEscola.setBackground(UIManager.getColor("Button.shadow"));
+		btnCriarEscola.setFont(new Font("Consolas", Font.BOLD, 15));
+		btnCriarEscola.setBounds(620, 290, 132, 32);
+		schoolPanel.add(btnCriarEscola);
+		
+		JLabel lblNomeEscola = new JLabel("Nome da Instituição:");
+		lblNomeEscola.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNomeEscola.setBounds(40, 63, 140, 18);
+		schoolPanel.add(lblNomeEscola);
+		
+		txtNomeEscola = new JTextField();
+		txtNomeEscola.setBounds(188, 62, 160, 19);
+		schoolPanel.add(txtNomeEscola);
+		txtNomeEscola.setColumns(10);
+		
+		JLabel lblEnderecoEscola = new JLabel("Endereço:");
+		lblEnderecoEscola.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblEnderecoEscola.setBounds(40, 113, 126, 18);
+		schoolPanel.add(lblEnderecoEscola);
+		
+		txtEnderecoEscola = new JTextField();
+		txtEnderecoEscola.setColumns(10);
+		txtEnderecoEscola.setBounds(174, 112, 174, 19);
+		schoolPanel.add(txtEnderecoEscola);
+		
+		JLabel lblIDEscola = new JLabel("Nº de Identificação:");
+		lblIDEscola.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblIDEscola.setBounds(40, 159, 155, 18);
+		schoolPanel.add(lblIDEscola);
+		
+		txtIDEscola = new JTextField();
+		txtIDEscola.setColumns(10);
+		txtIDEscola.setBounds(216, 158, 132, 19);
+		schoolPanel.add(txtIDEscola);
+		
+		JLabel lblAnoFundacaoEsc = new JLabel("Ano de Fundação:");
+		lblAnoFundacaoEsc.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblAnoFundacaoEsc.setBounds(404, 65, 126, 16);
+		schoolPanel.add(lblAnoFundacaoEsc);
+		
+		txtAnoFundacaoEsc = new JTextField();
+		txtAnoFundacaoEsc.setColumns(10);
+		txtAnoFundacaoEsc.setBounds(540, 62, 160, 19);
+		schoolPanel.add(txtAnoFundacaoEsc);
+		
+		JComboBox cbxDiretorEscola = new JComboBox();
+		cbxDiretorEscola.setEditable(true);
+		cbxDiretorEscola.setBounds(540, 111, 160, 21);
+		schoolPanel.add(cbxDiretorEscola);
+		
+		JLabel lblDiretorEscola = new JLabel("Diretor(a):");
+		lblDiretorEscola.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblDiretorEscola.setBounds(404, 115, 126, 16);
+		schoolPanel.add(lblDiretorEscola);
 		
 		JPanel teacherPanel = new JPanel();
 		tabbedPanel.addTab("Professores", null, teacherPanel, null);
-		tabbedPanel.setEnabledAt(1, false);
+		tabbedPanel.setEnabledAt(1, true);
 		teacherPanel.setLayout(null);
 		
 		JLabel lblCadastrarProfessores = new JLabel(" Cadastrar Professores");
@@ -114,32 +188,72 @@ public class GUI {
 		lblCadastrarProfessores.setBounds(0, 10, 781, 24);
 		teacherPanel.add(lblCadastrarProfessores);
 		
-		JButton btnNewButton_1 = new JButton("Continuar");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		JButton btnCriarProf = new JButton("Continuar");
+		btnCriarProf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tabbedPanel.setSelectedIndex(2);
 				tabbedPanel.setEnabledAt(1, true);
 			}
 		});
-		btnNewButton_1.setFont(new Font("Consolas", Font.BOLD, 15));
-		btnNewButton_1.setBackground(UIManager.getColor("Button.shadow"));
-		btnNewButton_1.setBounds(620, 290, 132, 32);
-		teacherPanel.add(btnNewButton_1);
+		btnCriarProf.setFont(new Font("Consolas", Font.BOLD, 15));
+		btnCriarProf.setBackground(UIManager.getColor("Button.shadow"));
+		btnCriarProf.setBounds(620, 290, 132, 32);
+		teacherPanel.add(btnCriarProf);
 		
-		JButton btnVoltar_1_5 = new JButton("Voltar");
-		btnVoltar_1_5.addActionListener(new ActionListener() {
+		JButton btnVoltar1 = new JButton("Voltar");
+		btnVoltar1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tabbedPanel.setSelectedIndex(0);
 			}
 		});
-		btnVoltar_1_5.setFont(new Font("Consolas", Font.BOLD, 15));
-		btnVoltar_1_5.setBackground(UIManager.getColor("Button.shadow"));
-		btnVoltar_1_5.setBounds(32, 290, 132, 32);
-		teacherPanel.add(btnVoltar_1_5);
+		btnVoltar1.setFont(new Font("Consolas", Font.BOLD, 15));
+		btnVoltar1.setBackground(UIManager.getColor("Button.shadow"));
+		btnVoltar1.setBounds(32, 290, 132, 32);
+		teacherPanel.add(btnVoltar1);
+		
+		JLabel lblNomeDoProf = new JLabel("Nome do Educador:");
+		lblNomeDoProf.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNomeDoProf.setBounds(40, 63, 140, 18);
+		teacherPanel.add(lblNomeDoProf);
+		
+		txtNomeDoProf = new JTextField();
+		txtNomeDoProf.setColumns(10);
+		txtNomeDoProf.setBounds(190, 62, 171, 19);
+		teacherPanel.add(txtNomeDoProf);
+		
+		JLabel lblIDProf = new JLabel("Nº de Identificação:");
+		lblIDProf.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblIDProf.setBounds(40, 120, 140, 18);
+		teacherPanel.add(lblIDProf);
+		
+		txtIDProf = new JTextField();
+		txtIDProf.setColumns(10);
+		txtIDProf.setBounds(190, 119, 171, 19);
+		teacherPanel.add(txtIDProf);
+		
+		JLabel lblDataContrataoProf = new JLabel("Data de Contratação:");
+		lblDataContrataoProf.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblDataContrataoProf.setBounds(416, 64, 151, 17);
+		teacherPanel.add(lblDataContrataoProf);
+		
+		txtDataContratacaoProf = new JTextField();
+		txtDataContratacaoProf.setColumns(10);
+		txtDataContratacaoProf.setBounds(577, 63, 160, 19);
+		teacherPanel.add(txtDataContratacaoProf);
+		
+		JLabel lblDisciplinaLecionada = new JLabel("Disciplina Lecionada:");
+		lblDisciplinaLecionada.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblDisciplinaLecionada.setBounds(421, 123, 140, 13);
+		teacherPanel.add(lblDisciplinaLecionada);
+		
+		txtDisciplinaLecionada = new JTextField();
+		txtDisciplinaLecionada.setColumns(10);
+		txtDisciplinaLecionada.setBounds(577, 120, 160, 19);
+		teacherPanel.add(txtDisciplinaLecionada);
 		
 		JPanel studentPanel = new JPanel();
 		tabbedPanel.addTab("Alunos", null, studentPanel, null);
-		tabbedPanel.setEnabledAt(2, false);
+		tabbedPanel.setEnabledAt(2, true);
 		studentPanel.setLayout(null);
 		
 		JLabel lblCadastrarAlunos = new JLabel(" Cadastrar Alunos");
@@ -148,16 +262,16 @@ public class GUI {
 		lblCadastrarAlunos.setBounds(0, 10, 781, 24);
 		studentPanel.add(lblCadastrarAlunos);
 		
-		JButton btnNewButton_2 = new JButton("Continuar");
-		btnNewButton_2.addActionListener(new ActionListener() {
+		JButton btnCriarAluno = new JButton("Criar");
+		btnCriarAluno.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tabbedPanel.setSelectedIndex(3);
 			}
 		});
-		btnNewButton_2.setFont(new Font("Consolas", Font.BOLD, 15));
-		btnNewButton_2.setBackground(UIManager.getColor("Button.shadow"));
-		btnNewButton_2.setBounds(620, 290, 132, 32);
-		studentPanel.add(btnNewButton_2);
+		btnCriarAluno.setFont(new Font("Consolas", Font.BOLD, 15));
+		btnCriarAluno.setBackground(UIManager.getColor("Button.shadow"));
+		btnCriarAluno.setBounds(620, 290, 132, 32);
+		studentPanel.add(btnCriarAluno);
 		
 		JButton btnVoltar_1_4 = new JButton("Voltar");
 		btnVoltar_1_4.addActionListener(new ActionListener() {
@@ -170,9 +284,49 @@ public class GUI {
 		btnVoltar_1_4.setBounds(32, 290, 132, 32);
 		studentPanel.add(btnVoltar_1_4);
 		
+		JLabel lblNomeDoAluno = new JLabel("Nome do Aluno:");
+		lblNomeDoAluno.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNomeDoAluno.setBounds(40, 63, 124, 18);
+		studentPanel.add(lblNomeDoAluno);
+		
+		txtNomeAluno = new JTextField();
+		txtNomeAluno.setColumns(10);
+		txtNomeAluno.setBounds(165, 62, 171, 19);
+		studentPanel.add(txtNomeAluno);
+		
+		JLabel lblNumeroMatrcula = new JLabel("Nº da Matrícula:");
+		lblNumeroMatrcula.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNumeroMatrcula.setBounds(40, 122, 124, 16);
+		studentPanel.add(lblNumeroMatrcula);
+		
+		txtNumeroMatricula = new JTextField();
+		txtNumeroMatricula.setColumns(10);
+		txtNumeroMatricula.setBounds(165, 122, 171, 19);
+		studentPanel.add(txtNumeroMatricula);
+		
+		JLabel lblSerie = new JLabel("Série:");
+		lblSerie.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblSerie.setBounds(414, 64, 88, 16);
+		studentPanel.add(lblSerie);
+		
+		txtSerie = new JTextField();
+		txtSerie.setColumns(10);
+		txtSerie.setBounds(511, 65, 171, 19);
+		studentPanel.add(txtSerie);
+		
+		JLabel lblDataInscricaoAluno = new JLabel("Data de Inscrição:");
+		lblDataInscricaoAluno.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblDataInscricaoAluno.setBounds(414, 125, 124, 16);
+		studentPanel.add(lblDataInscricaoAluno);
+		
+		txtDataInscricaoAluno = new JTextField();
+		txtDataInscricaoAluno.setColumns(10);
+		txtDataInscricaoAluno.setBounds(558, 123, 124, 19);
+		studentPanel.add(txtDataInscricaoAluno);
+		
 		JPanel coursePanel = new JPanel();
 		tabbedPanel.addTab("Cursos", null, coursePanel, null);
-		tabbedPanel.setEnabledAt(3, false);
+		tabbedPanel.setEnabledAt(3, true);
 		coursePanel.setLayout(null);
 		
 		JLabel lblCriarCursos = new JLabel(" Criar Cursos");
@@ -181,65 +335,135 @@ public class GUI {
 		lblCriarCursos.setBounds(0, 10, 781, 24);
 		coursePanel.add(lblCriarCursos);
 		
-		JButton btnVoltar_1_2 = new JButton("Voltar");
-		btnVoltar_1_2.addActionListener(new ActionListener() {
+		JButton btnVoltar3 = new JButton("Voltar");
+		btnVoltar3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tabbedPanel.setSelectedIndex(2);
 			}
 		});
-		btnVoltar_1_2.setFont(new Font("Consolas", Font.BOLD, 15));
-		btnVoltar_1_2.setBackground(UIManager.getColor("Button.shadow"));
-		btnVoltar_1_2.setBounds(32, 290, 132, 32);
-		coursePanel.add(btnVoltar_1_2);
+		btnVoltar3.setFont(new Font("Consolas", Font.BOLD, 15));
+		btnVoltar3.setBackground(UIManager.getColor("Button.shadow"));
+		btnVoltar3.setBounds(32, 290, 132, 32);
+		coursePanel.add(btnVoltar3);
 		
-		JButton btnVoltar_1_3 = new JButton("Continuar");
-		btnVoltar_1_3.addActionListener(new ActionListener() {
+		JButton btnCriarCurso = new JButton("Criar");
+		btnCriarCurso.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tabbedPanel.setSelectedIndex(4);
 			}
 		});
-		btnVoltar_1_3.setVerticalAlignment(SwingConstants.BOTTOM);
-		btnVoltar_1_3.setFont(new Font("Consolas", Font.BOLD, 15));
-		btnVoltar_1_3.setBackground(UIManager.getColor("Button.shadow"));
-		btnVoltar_1_3.setBounds(620, 290, 132, 32);
-		coursePanel.add(btnVoltar_1_3);
+		btnCriarCurso.setVerticalAlignment(SwingConstants.BOTTOM);
+		btnCriarCurso.setFont(new Font("Consolas", Font.BOLD, 15));
+		btnCriarCurso.setBackground(UIManager.getColor("Button.shadow"));
+		btnCriarCurso.setBounds(620, 290, 132, 32);
+		coursePanel.add(btnCriarCurso);
+		
+		JLabel lblNomeDoCurso = new JLabel("Nome do Curso:");
+		lblNomeDoCurso.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNomeDoCurso.setBounds(40, 63, 124, 24);
+		coursePanel.add(lblNomeDoCurso);
+		
+		txtNomeCurso = new JTextField();
+		txtNomeCurso.setColumns(10);
+		txtNomeCurso.setBounds(164, 68, 171, 19);
+		coursePanel.add(txtNomeCurso);
+		
+		JLabel lblCodigoCurso = new JLabel("Código do Curso:");
+		lblCodigoCurso.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblCodigoCurso.setBounds(40, 121, 124, 18);
+		coursePanel.add(lblCodigoCurso);
+		
+		txtCodigoCurso = new JTextField();
+		txtCodigoCurso.setColumns(10);
+		txtCodigoCurso.setBounds(164, 123, 171, 19);
+		coursePanel.add(txtCodigoCurso);
+		
+		JLabel lblDescricaoCurso = new JLabel("Descrição:");
+		lblDescricaoCurso.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblDescricaoCurso.setBounds(419, 71, 105, 18);
+		coursePanel.add(lblDescricaoCurso);
+		
+		txtDescricaoCurso = new JTextField();
+		txtDescricaoCurso.setColumns(10);
+		txtDescricaoCurso.setBounds(519, 73, 171, 19);
+		coursePanel.add(txtDescricaoCurso);
+		
+		JLabel lblAnoDeInicio = new JLabel("Ano de Ínicio:");
+		lblAnoDeInicio.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblAnoDeInicio.setBounds(419, 126, 105, 18);
+		coursePanel.add(lblAnoDeInicio);
+		
+		txtAnoDeInicio = new JTextField();
+		txtAnoDeInicio.setColumns(10);
+		txtAnoDeInicio.setBounds(531, 128, 159, 19);
+		coursePanel.add(txtAnoDeInicio);
 		
 		JPanel directorPanel = new JPanel();
 		tabbedPanel.addTab("Diretor", null, directorPanel, null);
-		tabbedPanel.setEnabledAt(4, false);
+		tabbedPanel.setEnabledAt(4, true);
 		directorPanel.setLayout(null);
 		
-		JLabel lblRegistrarDiretor = new JLabel(" Registrar Diretor");
+		JLabel lblRegistrarDiretor = new JLabel(" Registrar Diretor Associado");
 		lblRegistrarDiretor.setHorizontalAlignment(SwingConstants.LEFT);
 		lblRegistrarDiretor.setFont(new Font("Consolas", Font.BOLD, 20));
 		lblRegistrarDiretor.setBounds(0, 10, 781, 24);
 		directorPanel.add(lblRegistrarDiretor);
 		
-		JButton btnNewButton_3 = new JButton("Continuar");
-		btnNewButton_3.addActionListener(new ActionListener() {
+		JButton btnCriarDiretor = new JButton("Criar");
+		btnCriarDiretor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tabbedPanel.setSelectedIndex(5);
 			}
 		});
-		btnNewButton_3.setFont(new Font("Consolas", Font.BOLD, 15));
-		btnNewButton_3.setBackground(UIManager.getColor("Button.shadow"));
-		btnNewButton_3.setBounds(620, 290, 132, 32);
-		directorPanel.add(btnNewButton_3);
+		btnCriarDiretor.setFont(new Font("Consolas", Font.BOLD, 15));
+		btnCriarDiretor.setBackground(UIManager.getColor("Button.shadow"));
+		btnCriarDiretor.setBounds(620, 290, 132, 32);
+		directorPanel.add(btnCriarDiretor);
 		
-		JButton btnVoltar_1_1 = new JButton("Voltar");
-		btnVoltar_1_1.addActionListener(new ActionListener() {
+		JButton btnVoltar4 = new JButton("Voltar");
+		btnVoltar4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tabbedPanel.setSelectedIndex(3);
 			}
 		});
-		btnVoltar_1_1.setFont(new Font("Consolas", Font.BOLD, 15));
-		btnVoltar_1_1.setBackground(UIManager.getColor("Button.shadow"));
-		btnVoltar_1_1.setBounds(32, 290, 132, 32);
-		directorPanel.add(btnVoltar_1_1);
+		btnVoltar4.setFont(new Font("Consolas", Font.BOLD, 15));
+		btnVoltar4.setBackground(UIManager.getColor("Button.shadow"));
+		btnVoltar4.setBounds(32, 290, 132, 32);
+		directorPanel.add(btnVoltar4);
+		
+		JLabel lblNomeDiretor = new JLabel("Nome:");
+		lblNomeDiretor.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNomeDiretor.setBounds(40, 63, 64, 18);
+		directorPanel.add(lblNomeDiretor);
+		
+		JComboBox cbxNomeDiretor = new JComboBox();
+		cbxNomeDiretor.setEditable(true);
+		cbxNomeDiretor.setBounds(114, 63, 160, 21);
+		directorPanel.add(cbxNomeDiretor);
+		
+		JLabel lblIDDiretor = new JLabel("Nº de Identificação:");
+		lblIDDiretor.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblIDDiretor.setBounds(40, 127, 140, 18);
+		directorPanel.add(lblIDDiretor);
+		
+		txtIDDiretor = new JTextField();
+		txtIDDiretor.setColumns(10);
+		txtIDDiretor.setBounds(190, 126, 171, 19);
+		directorPanel.add(txtIDDiretor);
+		
+		JLabel lblDataContratacaoDiretor = new JLabel("Data de Contratação:");
+		lblDataContratacaoDiretor.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblDataContratacaoDiretor.setBounds(431, 64, 151, 17);
+		directorPanel.add(lblDataContratacaoDiretor);
+		
+		txtDataContratacaoDiretor = new JTextField();
+		txtDataContratacaoDiretor.setColumns(10);
+		txtDataContratacaoDiretor.setBounds(592, 63, 160, 19);
+		directorPanel.add(txtDataContratacaoDiretor);
 		
 		JPanel enrollPanel = new JPanel();
 		tabbedPanel.addTab("Matrícula", null, enrollPanel, null);
-		tabbedPanel.setEnabledAt(5, false);
+		tabbedPanel.setEnabledAt(5, true);
 		enrollPanel.setLayout(null);
 		
 		JLabel lblMatricularAlunos = new JLabel(" Matricular Alunos");
@@ -248,55 +472,136 @@ public class GUI {
 		lblMatricularAlunos.setBounds(0, 10, 781, 24);
 		enrollPanel.add(lblMatricularAlunos);
 		
-		JButton btnNewButton_4 = new JButton("Continuar");
-		btnNewButton_4.addActionListener(new ActionListener() {
+		JButton btnCriarMatricula = new JButton("Criar");
+		btnCriarMatricula.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tabbedPanel.setSelectedIndex(6);
 			}
 		});
-		btnNewButton_4.setFont(new Font("Consolas", Font.BOLD, 15));
-		btnNewButton_4.setBackground(UIManager.getColor("Button.shadow"));
-		btnNewButton_4.setBounds(620, 290, 132, 32);
-		enrollPanel.add(btnNewButton_4);
+		btnCriarMatricula.setFont(new Font("Consolas", Font.BOLD, 15));
+		btnCriarMatricula.setBackground(UIManager.getColor("Button.shadow"));
+		btnCriarMatricula.setBounds(620, 290, 132, 32);
+		enrollPanel.add(btnCriarMatricula);
 		
-		JButton btnVoltar_1 = new JButton("Voltar");
-		btnVoltar_1.addActionListener(new ActionListener() {
+		JButton btnVoltar5 = new JButton("Voltar");
+		btnVoltar5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tabbedPanel.setSelectedIndex(4);
 			}
 		});
-		btnVoltar_1.setFont(new Font("Consolas", Font.BOLD, 15));
-		btnVoltar_1.setBackground(UIManager.getColor("Button.shadow"));
-		btnVoltar_1.setBounds(32, 290, 132, 32);
-		enrollPanel.add(btnVoltar_1);
+		btnVoltar5.setFont(new Font("Consolas", Font.BOLD, 15));
+		btnVoltar5.setBackground(UIManager.getColor("Button.shadow"));
+		btnVoltar5.setBounds(32, 290, 132, 32);
+		enrollPanel.add(btnVoltar5);
+		
+		JLabel lblNomeAlunoMatricula = new JLabel("Aluno:");
+		lblNomeAlunoMatricula.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNomeAlunoMatricula.setBounds(274, 57, 64, 18);
+		enrollPanel.add(lblNomeAlunoMatricula);
+		
+		JComboBox cbxMatricularAluno = new JComboBox();
+		cbxMatricularAluno.setEditable(true);
+		cbxMatricularAluno.setBounds(348, 58, 160, 21);
+		enrollPanel.add(cbxMatricularAluno);
+		
+		JLabel lblCursoMatricula = new JLabel("Curso:");
+		lblCursoMatricula.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblCursoMatricula.setBounds(274, 111, 64, 18);
+		enrollPanel.add(lblCursoMatricula);
+		
+		JComboBox cbxCursoMatricula = new JComboBox();
+		cbxCursoMatricula.setEditable(true);
+		cbxCursoMatricula.setBounds(348, 112, 160, 21);
+		enrollPanel.add(cbxCursoMatricula);
+		
+		JLabel lblNotas1 = new JLabel("Notas do 1º Bimestre:");
+		lblNotas1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNotas1.setBounds(226, 169, 160, 18);
+		enrollPanel.add(lblNotas1);
+		
+		txtNotas1 = new JTextField();
+		txtNotas1.setBounds(411, 171, 112, 19);
+		enrollPanel.add(txtNotas1);
+		txtNotas1.setColumns(10);
+		
+		JLabel lblNotas2 = new JLabel("Notas do 2º Bimestre:");
+		lblNotas2.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNotas2.setBounds(226, 219, 160, 18);
+		enrollPanel.add(lblNotas2);
+		
+		txtNotas2 = new JTextField();
+		txtNotas2.setColumns(10);
+		txtNotas2.setBounds(411, 221, 112, 19);
+		enrollPanel.add(txtNotas2);
 		
 		JPanel reportPanel = new JPanel();
 		tabbedPanel.addTab("Relatório", null, reportPanel, null);
-		tabbedPanel.setEnabledAt(6, false);
+		tabbedPanel.setEnabledAt(6, true);
 		reportPanel.setLayout(null);
 		
-		JLabel lblGerarRelatrioDe = new JLabel(" Gerar Relatório de Notas");
-		lblGerarRelatrioDe.setHorizontalAlignment(SwingConstants.LEFT);
-		lblGerarRelatrioDe.setFont(new Font("Consolas", Font.BOLD, 20));
-		lblGerarRelatrioDe.setBounds(0, 10, 781, 24);
-		reportPanel.add(lblGerarRelatrioDe);
+		JLabel lblGerarRelatrio = new JLabel(" Gerar Relatório de Notas");
+		lblGerarRelatrio.setHorizontalAlignment(SwingConstants.LEFT);
+		lblGerarRelatrio.setFont(new Font("Consolas", Font.BOLD, 20));
+		lblGerarRelatrio.setBounds(0, 10, 781, 24);
+		reportPanel.add(lblGerarRelatrio);
 		
-		JButton btnNewButton_5 = new JButton("Salvar");
-		btnNewButton_5.setFont(new Font("Consolas", Font.BOLD, 15));
-		btnNewButton_5.setBackground(UIManager.getColor("Button.shadow"));
-		btnNewButton_5.setBounds(620, 290, 132, 32);
-		reportPanel.add(btnNewButton_5);
+		JButton btnGerarRelatorio = new JButton("Gerar");
+		btnGerarRelatorio.setFont(new Font("Consolas", Font.BOLD, 15));
+		btnGerarRelatorio.setBackground(UIManager.getColor("Button.shadow"));
+		btnGerarRelatorio.setBounds(620, 290, 132, 32);
+		reportPanel.add(btnGerarRelatorio);
 		
-		JButton btnVoltar = new JButton("Voltar");
-		btnVoltar.addActionListener(new ActionListener() {
+		JButton btnVoltar6 = new JButton("Voltar");
+		btnVoltar6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tabbedPanel.setSelectedIndex(5);
 			}
 		});
-		btnVoltar.setFont(new Font("Consolas", Font.BOLD, 15));
-		btnVoltar.setBackground(UIManager.getColor("Button.shadow"));
-		btnVoltar.setBounds(32, 290, 132, 32);
-		reportPanel.add(btnVoltar);
+		btnVoltar6.setFont(new Font("Consolas", Font.BOLD, 15));
+		btnVoltar6.setBackground(UIManager.getColor("Button.shadow"));
+		btnVoltar6.setBounds(32, 290, 132, 32);
+		reportPanel.add(btnVoltar6);
+		
+		JLabel lblSelecionarCurso = new JLabel("Selecionar Curso:");
+		lblSelecionarCurso.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblSelecionarCurso.setBounds(160, 83, 140, 18);
+		reportPanel.add(lblSelecionarCurso);
+		
+		JComboBox cbxSelecionarCurso = new JComboBox();
+		cbxSelecionarCurso.setEditable(true);
+		cbxSelecionarCurso.setBounds(310, 83, 200, 21);
+		reportPanel.add(cbxSelecionarCurso);
+		
+		JLabel lblCursoSelecionado = new JLabel("Curso Selecionado:");
+		lblCursoSelecionado.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblCursoSelecionado.setBounds(160, 133, 140, 18);
+		reportPanel.add(lblCursoSelecionado);
+		
+		JLabel lblCursoResultado = new JLabel("...........................................");
+		lblCursoResultado.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblCursoResultado.setBounds(313, 133, 197, 18);
+		reportPanel.add(lblCursoResultado);
+		
+		JButton btnOK = new JButton("OK");
+		btnOK.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lblCursoResultado.setText(cbxSelecionarCurso.getSelectedItem().toString());
+			}
+		});
+		btnOK.setFont(new Font("Consolas", Font.PLAIN, 15));
+		btnOK.setBackground(UIManager.getColor("Button.shadow"));
+		btnOK.setBounds(548, 84, 92, 20);
+		reportPanel.add(btnOK);
+		
+		JLabel lblRelatrioDeNotas = new JLabel("Relatório de Notas:");
+		lblRelatrioDeNotas.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblRelatrioDeNotas.setBounds(160, 182, 140, 18);
+		reportPanel.add(lblRelatrioDeNotas);
+		
+		JLabel lblNotas = new JLabel("...........................................");
+		lblNotas.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNotas.setBounds(313, 187, 197, 18);
+		reportPanel.add(lblNotas);
 		    
 	}
 }
