@@ -1,5 +1,6 @@
 package application;
 
+import java.awt.Color;
 //import java.awt.BorderLayout;
 //import java.awt.Color;
 import java.awt.EventQueue;
@@ -91,20 +92,22 @@ public class AppWindow {
 		initialize();
 	}
 
-	private boolean validateAndSubmit(JPanel panel, JTextField textField) {
-		String nome = textField.getText();
+	private boolean validateAndSubmitName(JPanel panel, JTextField textField) {
+		String validacao = textField.getText();
 
-		if (nome.isEmpty()) {
-			displayErrorMessage(panel, "Campo de nome não pode estar vazio.");
-			return false;
-		} else if (nome.matches(".*\\d.*")) {
-			displayErrorMessage(panel, "O nome não pode conter números.");
-			return false;
-		} else if (nome.matches(".*[^a-zA-Z].*")) {
-			displayErrorMessage(panel, "O nome não pode conter caracteres especiais.");
+		if (validacao.isEmpty() || validacao.matches(".*\\d.*") || validacao.matches(".*[^a-zA-Z].*")) {
 			return false;
 		} else {
-			JOptionPane.showMessageDialog(panel, "Nome válido: " + nome, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+			return true;
+		}
+	}
+
+	private boolean validateAndSubmitOnlyNumbers(JPanel panel, JTextField textField) {
+		String validacao = textField.getText();
+
+		if (validacao.isEmpty() || !validacao.matches("\\d+")) {
+			return false;
+		} else {
 			return true;
 		}
 	}
@@ -243,14 +246,25 @@ public class AppWindow {
 		JButton btnCriarEscola = new JButton("Criar");
 		btnCriarEscola.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				CreateObjects.createSchool(txtNomeEscola.getText(), txtEnderecoEscola.getText(),
-						Integer.parseInt(txtIDEscola.getText()), txtAnoFundacaoEsc.getText(),
-						(Director) cbxDiretorEscola.getSelectedItem(), schools);
-				atualizarComboBoxEscola(cbxEscolaProfessor, schools);
-				atualizarComboBoxEscola(cbxCursoEscola, schools);
-				atualizarComboBoxEscola(cbxAlunoEscola, schools);
-
+				validateAndSubmitName(schoolPanel, txtNomeEscola);
+				validateAndSubmitName(schoolPanel, txtEnderecoEscola);
+				validateAndSubmitOnlyNumbers(schoolPanel, txtIDEscola);
+				validateAndSubmitOnlyNumbers(schoolPanel, txtAnoFundacaoEsc);
+				if (validateAndSubmitName(schoolPanel, txtNomeEscola) == true
+						&& validateAndSubmitName(schoolPanel, txtEnderecoEscola) == true
+						&& validateAndSubmitOnlyNumbers(schoolPanel, txtIDEscola) == true
+						&& validateAndSubmitOnlyNumbers(schoolPanel, txtAnoFundacaoEsc) == true) {
+					CreateObjects.createSchool(txtNomeEscola.getText(), txtEnderecoEscola.getText(),
+							Integer.parseInt(txtIDEscola.getText()), txtAnoFundacaoEsc.getText(),
+							(Director) cbxDiretorEscola.getSelectedItem(), schools);
+					atualizarComboBoxEscola(cbxEscolaProfessor, schools);
+					atualizarComboBoxEscola(cbxCursoEscola, schools);
+					atualizarComboBoxEscola(cbxAlunoEscola, schools);
+					JOptionPane.showMessageDialog(null, "Escola registrado");
+				} else {
+					displayErrorMessage(schoolPanel, "Preencha os campos corretamente");
+					clearErrorMessage(schoolPanel);
+				}
 			}
 		});
 		btnCriarEscola.setBackground(UIManager.getColor("Button.shadow"));
@@ -317,14 +331,22 @@ public class AppWindow {
 		JButton btnCriarProf = new JButton("Criar");
 		btnCriarProf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				tabbedPanel.setEnabledAt(1, true);
-				CreateObjects.createTeacher(txtNomeDoProf.getText(), Integer.parseInt(txtIDProf.getText()),
-						txtDataContratacaoProf.getText(), txtDisciplinaLecionada.getText(),
-						(School) cbxEscolaProfessor.getSelectedItem(), teachers);
-				System.out.println("criado!");
-				atualizarComboBoxProfessor(cbxCursoProfessor, teachers);
-
+				validateAndSubmitName(teacherPanel, txtNomeDoProf);
+				validateAndSubmitOnlyNumbers(teacherPanel, txtIDProf);
+				validateAndSubmitName(teacherPanel, txtDisciplinaLecionada);
+				if (validateAndSubmitName(teacherPanel, txtNomeDoProf) == true
+						&& validateAndSubmitOnlyNumbers(teacherPanel, txtIDProf) == true
+						&& validateAndSubmitName(teacherPanel, txtDisciplinaLecionada) == true) {
+					CreateObjects.createTeacher(txtNomeDoProf.getText(), Integer.parseInt(txtIDProf.getText()),
+							txtDataContratacaoProf.getText(), txtDisciplinaLecionada.getText(),
+							(School) cbxEscolaProfessor.getSelectedItem(), teachers);
+					System.out.println("criado!");
+					atualizarComboBoxProfessor(cbxCursoProfessor, teachers);
+					JOptionPane.showMessageDialog(null, "Professor registrado");
+				} else {
+					displayErrorMessage(teacherPanel, "Preencha os campos corretamente");
+					clearErrorMessage(teacherPanel);
+				}
 			}
 		});
 		btnCriarProf.setFont(new Font("Consolas", Font.BOLD, 15));
@@ -402,12 +424,20 @@ public class AppWindow {
 		JButton btnCriarDiretor = new JButton("Criar");
 		btnCriarDiretor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				validateAndSubmit(directorPanel, txtNomeDiretor);
-				if (validateAndSubmit(directorPanel, txtNomeDiretor) == true) {
+				validateAndSubmitName(directorPanel, txtNomeDiretor);
+				validateAndSubmitOnlyNumbers(directorPanel, txtIDDiretor);
+				System.out.println(validateAndSubmitName(directorPanel, txtNomeDiretor));
+				System.out.println(validateAndSubmitOnlyNumbers(directorPanel, txtIDDiretor));
+				if (validateAndSubmitName(directorPanel, txtNomeDiretor) == true
+						&& validateAndSubmitOnlyNumbers(directorPanel, txtIDDiretor) == true) {
 					CreateObjects.createDirector(txtNomeDiretor.getText(), Integer.parseInt(txtIDDiretor.getText()),
 							txtDataContratacaoDiretor.getText(), directors);
 					System.out.println("criado");
 					atualizarComboBoxDiretor(cbxDiretorEscola, directors);
+					JOptionPane.showMessageDialog(null, "Diretor registrado");
+				} else {
+					displayErrorMessage(directorPanel, "Preencha os campos corretamente");
+					clearErrorMessage(directorPanel);
 				}
 			}
 		});
@@ -471,12 +501,21 @@ public class AppWindow {
 		JButton btnCriarAluno = new JButton("Criar");
 		btnCriarAluno.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CreateObjects.createStudent(txtNomeAluno.getText(), Integer.parseInt(txtNumeroMatricula.getText()),
-						txtSerie.getText(), txtDataInscricaoAluno.getText(), (School) cbxAlunoEscola.getSelectedItem(),
-						students);
-
-				atualizarComboBoxAluno(cbxMatricularAluno, students);
-
+				validateAndSubmitName(studentPanel, txtNomeAluno);
+				validateAndSubmitOnlyNumbers(studentPanel, txtNumeroMatricula);
+				validateAndSubmitOnlyNumbers(studentPanel, txtSerie);
+				if (validateAndSubmitName(studentPanel, txtNomeAluno) == true
+						&& validateAndSubmitOnlyNumbers(studentPanel, txtNumeroMatricula) == true
+						&& validateAndSubmitOnlyNumbers(studentPanel, txtSerie) == true) {
+					CreateObjects.createStudent(txtNomeAluno.getText(), Integer.parseInt(txtNumeroMatricula.getText()),
+							txtSerie.getText(), txtDataInscricaoAluno.getText(),
+							(School) cbxAlunoEscola.getSelectedItem(), students);
+					atualizarComboBoxAluno(cbxMatricularAluno, students);
+					JOptionPane.showMessageDialog(null, "Aluno registrado");
+				} else {
+					displayErrorMessage(studentPanel, "Preencha os campos corretamente");
+					clearErrorMessage(studentPanel);
+				}
 			}
 		});
 		btnCriarAluno.setFont(new Font("Consolas", Font.BOLD, 15));
@@ -554,9 +593,18 @@ public class AppWindow {
 		JButton btnCriarMatricula = new JButton("Criar");
 		btnCriarMatricula.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AddStudentCourse.addStudentCourse((Student) cbxMatricularAluno.getSelectedItem(),
-						(Course) cbxCursoMatricula.getSelectedItem(), Double.valueOf(txtNotas1.getText()),
-						Double.valueOf(txtNotas2.getText()));
+				validateAndSubmitOnlyNumbers(enrollPanel, txtNotas1);
+				validateAndSubmitOnlyNumbers(enrollPanel, txtNotas2);
+				if (validateAndSubmitOnlyNumbers(enrollPanel, txtNotas1) == true
+						&& validateAndSubmitOnlyNumbers(enrollPanel, txtNotas2) == true) {
+					AddStudentCourse.addStudentCourse((Student) cbxMatricularAluno.getSelectedItem(),
+							(Course) cbxCursoMatricula.getSelectedItem(), Double.valueOf(txtNotas1.getText()),
+							Double.valueOf(txtNotas2.getText()));
+					JOptionPane.showMessageDialog(null, "Matricula registrado");
+				} else {
+					displayErrorMessage(enrollPanel, "Preencha os campos corretamente");
+					clearErrorMessage(enrollPanel);
+				}
 			}
 		});
 		btnCriarMatricula.setFont(new Font("Consolas", Font.BOLD, 15));
@@ -620,10 +668,18 @@ public class AppWindow {
 		cbxSelecionarCurso.setEditable(true);
 		cbxSelecionarCurso.setBounds(160, 45, 125, 18);
 		reportPanel.add(cbxSelecionarCurso);
-
+		
 		JTextArea textAreaRelatorio = new JTextArea();
-		textAreaRelatorio.setBounds(171, 143, 451, 179);
+		textAreaRelatorio.setBounds(174, 143, 448, 179);
 		reportPanel.add(textAreaRelatorio);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setBounds(174, 143, 448, 179);
+		scrollPane.getViewport().setBackground(Color.white);
+		scrollPane.getViewport().add(textAreaRelatorio);
+		
+		reportPanel.add(scrollPane);
 
 		JButton btnGerarRelatorio = new JButton("Gerar");
 		btnGerarRelatorio.addActionListener(new ActionListener() {
@@ -698,13 +754,25 @@ public class AppWindow {
 		JButton btnCriarCurso = new JButton("Criar");
 		btnCriarCurso.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CreateObjects.createCourse(txtNomeCurso.getText(), Integer.parseInt(txtCodigoCurso.getText()),
-						txtDescricaoCurso.getText(), txtAnoDeInicio.getText(),
-						(Teacher) cbxCursoProfessor.getSelectedItem(), (School) cbxCursoEscola.getSelectedItem(),
-						courses);
-				atualizarComboBoxCurso(cbxCursoMatricula, courses);
-				atualizarComboBoxCurso(cbxSelecionarCurso, courses);
-
+				validateAndSubmitName(coursePanel, txtNomeCurso);
+				validateAndSubmitOnlyNumbers(coursePanel, txtCodigoCurso);
+				validateAndSubmitName(coursePanel, txtDescricaoCurso);
+				validateAndSubmitOnlyNumbers(coursePanel, txtAnoDeInicio);
+				if (validateAndSubmitName(coursePanel, txtNomeCurso) == true
+						&& validateAndSubmitOnlyNumbers(coursePanel, txtCodigoCurso) == true
+						&& validateAndSubmitName(coursePanel, txtDescricaoCurso) == true
+						&& validateAndSubmitOnlyNumbers(coursePanel, txtAnoDeInicio) == true) {
+					CreateObjects.createCourse(txtNomeCurso.getText(), Integer.parseInt(txtCodigoCurso.getText()),
+							txtDescricaoCurso.getText(), txtAnoDeInicio.getText(),
+							(Teacher) cbxCursoProfessor.getSelectedItem(), (School) cbxCursoEscola.getSelectedItem(),
+							courses);
+					atualizarComboBoxCurso(cbxCursoMatricula, courses);
+					atualizarComboBoxCurso(cbxSelecionarCurso, courses);
+					JOptionPane.showMessageDialog(null, "Curso registrado");
+				} else {
+					displayErrorMessage(enrollPanel, "Preencha os campos corretamente");
+					clearErrorMessage(coursePanel);
+				}
 			};
 		});
 		btnCriarCurso.setVerticalAlignment(SwingConstants.BOTTOM);
