@@ -1,5 +1,6 @@
 package application;
 
+import java.awt.Color;
 //import java.awt.BorderLayout;
 //import java.awt.Color;
 import java.awt.EventQueue;
@@ -17,7 +18,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 //import javax.swing.UIManager;
 //import javax.swing.JLayeredPane;
@@ -463,6 +463,7 @@ public class AppWindow {
 		lblCadastrarAlunos.setBounds(0, 10, 781, 24);
 		studentPanel.add(lblCadastrarAlunos);
 
+		@SuppressWarnings("unchecked")
 		JComboBox cbxMatricularAluno = new JComboBox(students.toArray());
 		cbxMatricularAluno.setEditable(true);
 		cbxMatricularAluno.setBounds(348, 58, 160, 21);
@@ -476,6 +477,8 @@ public class AppWindow {
 						students);
 
 				atualizarComboBoxAluno(cbxMatricularAluno, students);
+				
+				System.out.println(students);
 
 			}
 		});
@@ -622,8 +625,16 @@ public class AppWindow {
 		reportPanel.add(cbxSelecionarCurso);
 
 		JTextArea textAreaRelatorio = new JTextArea();
-		textAreaRelatorio.setBounds(171, 143, 451, 179);
+		textAreaRelatorio.setBounds(174, 143, 448, 179);
 		reportPanel.add(textAreaRelatorio);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setBounds(174, 143, 448, 179);
+		scrollPane.getViewport().setBackground(Color.white);
+		scrollPane.getViewport().add(textAreaRelatorio);
+		
+		reportPanel.add(scrollPane);
 
 		JButton btnGerarRelatorio = new JButton("Gerar");
 		btnGerarRelatorio.addActionListener(new ActionListener() {

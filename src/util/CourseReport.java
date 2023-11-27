@@ -18,8 +18,8 @@ public class CourseReport {
 		String allNamesAndGrades = "";
 
 		for (Student student : course.getStudents()) {
-			allNamesAndGrades += "Student: " + student.getName() + " \ngrade 1: "
-					+ student.getCourseGrades(course.getCourseID()).getFirstGrade() + " \ngrade 2: "
+			allNamesAndGrades += "Estudante: " + student.getName() + " \nNota 1: "
+					+ student.getCourseGrades(course.getCourseID()).getFirstGrade() + " \nNota 2: "
 					+ student.getCourseGrades(course.getCourseID()).getSecondGrade() + "\n\n";
 		}
 
