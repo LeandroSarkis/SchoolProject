@@ -18,7 +18,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 //import javax.swing.UIManager;
 //import javax.swing.JLayeredPane;
@@ -493,6 +492,7 @@ public class AppWindow {
 		lblCadastrarAlunos.setBounds(0, 10, 781, 24);
 		studentPanel.add(lblCadastrarAlunos);
 
+		@SuppressWarnings("unchecked")
 		JComboBox cbxMatricularAluno = new JComboBox(students.toArray());
 		cbxMatricularAluno.setEditable(true);
 		cbxMatricularAluno.setBounds(348, 58, 160, 21);
@@ -501,6 +501,7 @@ public class AppWindow {
 		JButton btnCriarAluno = new JButton("Criar");
 		btnCriarAluno.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+<<<<<<< HEAD
 				validateAndSubmitName(studentPanel, txtNomeAluno);
 				validateAndSubmitOnlyNumbers(studentPanel, txtNumeroMatricula);
 				validateAndSubmitOnlyNumbers(studentPanel, txtSerie);
@@ -516,6 +517,16 @@ public class AppWindow {
 					displayErrorMessage(studentPanel, "Preencha os campos corretamente");
 					clearErrorMessage(studentPanel);
 				}
+=======
+				CreateObjects.createStudent(txtNomeAluno.getText(), Integer.parseInt(txtNumeroMatricula.getText()),
+						txtSerie.getText(), txtDataInscricaoAluno.getText(), (School) cbxAlunoEscola.getSelectedItem(),
+						students);
+
+				atualizarComboBoxAluno(cbxMatricularAluno, students);
+				
+				System.out.println(students);
+
+>>>>>>> f0f6d3683a37d54476bd07d07fdbee3ef745911d
 			}
 		});
 		btnCriarAluno.setFont(new Font("Consolas", Font.BOLD, 15));
