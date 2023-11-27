@@ -516,10 +516,6 @@ public class AppWindow {
 					displayErrorMessage(studentPanel, "Preencha os campos corretamente");
 					clearErrorMessage(studentPanel);
 				}
-				CreateObjects.createStudent(txtNomeAluno.getText(), Integer.parseInt(txtNumeroMatricula.getText()),
-						txtSerie.getText(), txtDataInscricaoAluno.getText(), (School) cbxAlunoEscola.getSelectedItem(),
-						students);
-
 				atualizarComboBoxAluno(cbxMatricularAluno, students);
 				
 				System.out.println(students);
