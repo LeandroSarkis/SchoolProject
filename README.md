@@ -1,3 +1,5 @@
+# SchoolProject
+
 Trabalho dedicado a desenvolver um aplicativo desktop em Java Swing
 para gerenciar escolas, professores, alunos e cursos, proposto pelo docente Pedro Girotto. 
 A aplicação permitirá a criação de escolas, adição de diretores, professores e alunos a cada escola,
